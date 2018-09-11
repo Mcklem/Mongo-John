@@ -65,6 +65,8 @@ joystick.on("data", function() {
 
 ```
 
+![Alt text](https://github.com/Mcklem/Mongo-John/blob/master/readme/images/Joystick-sample.png)
+
 ### Development
 
 Do you Want to contribute? 
