@@ -76,6 +76,8 @@ joystick.on("change", function() {
 
 ```
 
+After two 'joystick' changes...
+
 ![Alt text](https://github.com/Mcklem/Mongo-John/blob/master/readme/images/Joystick-sample.png)
 
 ### Development
