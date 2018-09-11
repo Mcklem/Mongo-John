@@ -51,7 +51,7 @@ And start storing data (the following calls) mj.component(instance) uses the Jho
 var barometer = new five.Barometer({
     controller: "BMP180"
 });
-barometer.on("data", function() {
+barometer.on("change", function() {
     mj.save(this);
 });
 
@@ -59,7 +59,7 @@ var joystick = new five.Joystick({
     // [ x, y ]
     pins: ["A1", "A2"]
 });
-joystick.on("data", function() {
+joystick.on("change", function() {
     mj.save(this);
 });
 
