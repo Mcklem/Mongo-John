@@ -3,6 +3,21 @@ var mongoose = require('mongoose'),
     five = require('johnny-five');
 var Schema = mongoose.Schema;
 
+//plugins
+function timestamp(schema, settings) {
+    if(settings && settings.timestamp == false)  {
+        next();
+    }
+    else{
+        schema.add({ 
+            timestamp: Date
+        });
+        schema.pre('save', function (next) {
+            this.timestamp = Date.now();
+            next();
+        });
+    }
+}
 
 var AccelerometerSchema = new Schema({
 
@@ -47,6 +62,7 @@ var AccelerometerSchema = new Schema({
         required: false
     }
 });
+AccelerometerSchema.plugin(timestamp);
 var Accelerometer = mongoose.model('Accelerometer', AccelerometerSchema);
 
 var ThermometerSchema = new Schema({
@@ -68,6 +84,7 @@ var ThermometerSchema = new Schema({
         required: false
     }
 });
+ThermometerSchema.plugin(timestamp);
 var Thermometer = mongoose.model('Thermometer', ThermometerSchema);
 
 var GyroSchema = new Schema({
@@ -114,6 +131,7 @@ var GyroSchema = new Schema({
         required: false
     }
 });
+GyroSchema.plugin(timestamp);
 var Gyro = mongoose.model('Gyro', GyroSchema);
 
 var AltimeterSchema = new Schema({
@@ -130,6 +148,7 @@ var AltimeterSchema = new Schema({
         required: false 
     },
 });
+AltimeterSchema.plugin(timestamp);
 var Altimeter = mongoose.model('Altimeter', AltimeterSchema);
 
 var BarometerSchema = new Schema({
@@ -146,6 +165,7 @@ var BarometerSchema = new Schema({
         required: false 
     }
 });
+BarometerSchema.plugin(timestamp);
 var Barometer = mongoose.model('Barometer', BarometerSchema);
 
 var CompassSchema = new Schema({
@@ -186,6 +206,7 @@ var CompassSchema = new Schema({
         }
     }
 });
+CompassSchema.plugin(timestamp);
 var Compass = mongoose.model('Compass', CompassSchema);
 
 var ProximitySchema = new Schema({
@@ -202,6 +223,7 @@ var ProximitySchema = new Schema({
         required: false 
     }
 });
+ProximitySchema.plugin(timestamp);
 var Proximity = mongoose.model('Proximity', ProximitySchema);
 
 var RelaySchema = new Schema({
@@ -218,6 +240,7 @@ var RelaySchema = new Schema({
         required: false 
     }
 });
+RelaySchema.plugin(timestamp);
 var Relay = mongoose.model('Relay', RelaySchema);
 
 var GPSSchema = new Schema({
@@ -254,6 +277,7 @@ var GPSSchema = new Schema({
         required: false 
     }
 });
+GPSSchema.plugin(timestamp);
 var GPS = mongoose.model('GPS', GPSSchema);
 
 var ServoSchema = new Schema({
@@ -302,6 +326,7 @@ var ServoSchema = new Schema({
         required: false 
     }
 });
+ServoSchema.plugin(timestamp);
 var Servo = mongoose.model('Servo', ServoSchema);
 
 var JoystickSchema = new Schema({
@@ -318,6 +343,7 @@ var JoystickSchema = new Schema({
         required: false 
     }
 });
+JoystickSchema.plugin(timestamp);
 var Joystick = mongoose.model('Joystick', JoystickSchema);
 
 var LightSchema = new Schema({
@@ -342,6 +368,7 @@ var LightSchema = new Schema({
         required: false 
     }
 });
+LightSchema.plugin(timestamp);
 var Light = mongoose.model('Light', LightSchema);
 
 var HygrometerSchema = new Schema({
@@ -354,6 +381,7 @@ var HygrometerSchema = new Schema({
         required: false 
     }
 });
+HygrometerSchema.plugin(timestamp);
 var Hygrometer = mongoose.model('Hygrometer', HygrometerSchema);
 
 var MotionSchema = new Schema({
@@ -378,6 +406,7 @@ var MotionSchema = new Schema({
         required: false 
     }
 });
+MotionSchema.plugin(timestamp);
 var Motion = mongoose.model('Motion', MotionSchema);
 
 //Animation segment
@@ -429,6 +458,7 @@ var SegmentSchema = new Schema({
         required: false 
     }
 });
+SegmentSchema.plugin(timestamp);
 var Segment = mongoose.model('Segment', SegmentSchema);
 
 var SensorSchema = new Schema({
@@ -465,6 +495,7 @@ var SensorSchema = new Schema({
         required: false 
     }
 });
+SensorSchema.plugin(timestamp);
 var Sensor = mongoose.model('Sensor', SensorSchema);
 
 
@@ -560,38 +591,38 @@ var joystick = function(joystick) {
     });
 };
 
-exports.save = function(instance){
+exports.save = function(instance, settings){
     switch(instance.constructor){
-        
+
         case five.Accelerometer:
             accelerometer(instance);
-        break;
+            break;
         case five.Thermometer:
             thermometer(instance);
-        break;
+            break;
         case five.Gyro:
             gyro(instance);
-        break;
+            break;
         case five.Altimeter:
             altimeter(instance);
-        break;
+            break;
         case five.Barometer:
             barometer(instance);
-        break;
+            break;
         case five.Compass:
             compass(instance);
-        break;
+            break;
         case five.Proximity:
             proximity(instance);
-        break;
+            break;
         case five.Relay:
             relay(instance);
-        break;
+            break;
         case five.Joystick:
             joystick(instance);
-        break;
+            break;
         default:
             console.log("Class type of " + instance.constructor + " not found");
-        break;
+            break;
     }
 }

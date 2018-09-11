@@ -36,7 +36,7 @@ mongoose install required
 $ npm install mongoose --save
 ```
 
-Import mongo-john
+Import johnny-five and mongo-john
 
 ```
 var five = require("johnny-five"),
