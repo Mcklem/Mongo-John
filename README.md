@@ -40,7 +40,7 @@ Import johnny-five and mongo-john
 
 ```
 var five = require("johnny-five"),
-	mj = require('mongo-john');
+    mj = require('mongo-john');
   
 ```
 
@@ -49,10 +49,10 @@ And start storing data (the following calls) mj.component(instance) uses the Jho
 ```
 
 var barometer = new five.Barometer({
-	controller: "BMP180"
+    controller: "BMP180"
 });
 barometer.on("data", function() {
-	mj.barometer(this);
+    mj.save(this);
 });
 
 var joystick = new five.Joystick({
@@ -60,7 +60,7 @@ var joystick = new five.Joystick({
     pins: ["A1", "A2"]
 });
 joystick.on("data", function() {
-    mj.joystick(this);
+    mj.save(this);
 });
 
 ```
