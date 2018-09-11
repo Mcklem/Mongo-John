@@ -54,7 +54,7 @@ mongoose.connect('mongodb://localhost/JohnnyFive');
 
 ```
 
-And start storing data (the following calls) mj.component(instance) uses the JhonnyFive component instance and parse all data to a model and save it to de mongoDBS
+And start storing data (the following call) mj.save(instance) uses the JhonnyFive component instance, it parse all data to a model (using a Schema) and save it to de mongoDBS
 
 ```
 
