@@ -40,8 +40,18 @@ Import johnny-five and mongo-john
 
 ```
 var five = require("johnny-five"),
-    mj = require('mongo-john');
+    mj = require('mongo-john'),
+    mongoose = require('mongoose');
   
+```
+
+Initialize DB connection
+
+```
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/JohnnyFive');
+
 ```
 
 And start storing data (the following calls) mj.component(instance) uses the JhonnyFive component instance and parse all data to a model and save it to de mongoDBS
