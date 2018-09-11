@@ -8,8 +8,9 @@
   
 # Lastest Features!
   
-  - Basic Schema for each component
-  - Simple functions to take a snapshot of a component state
+  - Basic Schema for each component.
+  - Simple function to take a snapshot of a component state.
+  - Great vision of new implementations, keep updated, roadmap soon.
   
 
 ### Requeriments
