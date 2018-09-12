@@ -498,9 +498,29 @@ var SensorSchema = new Schema({
 SensorSchema.plugin(timestamp);
 var Sensor = mongoose.model('Sensor', SensorSchema);
 
+var SwitchSchema = new Schema({
+    id:{ 
+        type: String, 
+        required: false 
+    },
+    pin: { 
+        type: Number, 
+        required: false 
+    },
+    isClosed: { 
+        type: Boolean, 
+        required: false 
+    },
+    isOpen: { 
+        type: Boolean, 
+        required: false 
+    }
+});
+SwitchSchema.plugin(timestamp);
+var Switch = mongoose.model('Switch', SwitchSchema);
 
 /*
-* Creates a accelerometer snapshot in mongodb from a given instance http://johnny-five.io/api/accelerometer/
+* Creates an 'Accelerometer' snapshot in mongodb from a given instance http://johnny-five.io/api/accelerometer/
 */
 var accelerometer = function(accelerometer) {
     var instance = new Accelerometer({id: accelerometer.id,zeroV: accelerometer.zeroV,pitch: accelerometer.pitch,roll: accelerometer.roll,x: accelerometer.x,y: accelerometer.y,z: accelerometer.z,acceleration: accelerometer.acceleration,inclination: accelerometer.inclination,orientation: accelerometer.orientation});
@@ -510,7 +530,7 @@ var accelerometer = function(accelerometer) {
 };
 
 /*
-* Creates a thermometer snapshot in mongodb from a given instance http://johnny-five.io/api/thermometer/
+* Creates a 'Thermometer' snapshot in mongodb from a given instance http://johnny-five.io/api/thermometer/
 */
 var thermometer = function(thermometer) {
     var instance = new Thermometer({id: thermometer.id,celsius: thermometer.celsius,fahrenheit: thermometer.fahrenheit,kelvin: thermometer.kelvin});
@@ -520,7 +540,7 @@ var thermometer = function(thermometer) {
 };
 
 /*
-* Creates a gyroscope snapshot in mongodb from a given instance http://johnny-five.io/api/gyro/
+* Creates a 'Gyroscope' snapshot in mongodb from a given instance http://johnny-five.io/api/gyro/
 */
 var gyro = function(gyro) {
     var instance = new Gyro({id: gyro.id,isCalibrated: gyro.isCalibrated,pitch: gyro.pitch,roll: gyro.roll,yaw: gyro.yaw,rate: gyro.rate,x: gyro.x,y: gyro.y,z: gyro.z });
@@ -530,7 +550,7 @@ var gyro = function(gyro) {
 };
 
 /*
-* Creates an altimeter snapshot in mongodb from a given instance http://johnny-five.io/api/altimeter/
+* Creates an 'Altimeter' snapshot in mongodb from a given instance http://johnny-five.io/api/altimeter/
 */
 var altimeter = function(altimeter) {
     var instance = new Altimeter({id: altimeter.id, feet: altimeter.feet, meters: altimeter.meters });
@@ -540,7 +560,7 @@ var altimeter = function(altimeter) {
 };
 
 /*
-* Creates a barometer snapshot in mongodb from a given instance http://johnny-five.io/api/barometer/
+* Creates a 'Barometer' snapshot in mongodb from a given instance http://johnny-five.io/api/barometer/
 */
 var barometer = function(barometer) {
     var instance = new Barometer({id: barometer.id, pressure: barometer.pressure, controller: barometer.controller });
@@ -550,7 +570,7 @@ var barometer = function(barometer) {
 };
 
 /*
-* Creates a compass snapshot in mongodb from a given instance http://johnny-five.io/api/compass/
+* Creates a 'Compass' snapshot in mongodb from a given instance http://johnny-five.io/api/compass/
 */
 var compass = function(compass) {
     var instance = new Barometer({id: compass.id, raw: { x: compass.raw.x, y: compass.raw.y, z: compass.raw.z}, heading: compass.heading, bearing: { point: compass.bearing.point, abbr: compass.bearing.abbr, low: compass.bearing.low, mid: compass.bearing.mid, high: compass.bearing.high }});
@@ -560,7 +580,7 @@ var compass = function(compass) {
 };
 
 /*
-* Creates a proximity snapshot in mongodb from a given instance http://johnny-five.io/api/proximity/
+* Creates a 'Proximity' snapshot in mongodb from a given instance http://johnny-five.io/api/proximity/
 */
 var proximity = function(proximity) {
     var instance = new Proximity({id: proximity.id, centimeters: proximity.centimeters, inches: proximity.inches});
@@ -570,7 +590,7 @@ var proximity = function(proximity) {
 };
 
 /*
-* Creates a relay snapshot in mongodb from a given instance http://johnny-five.io/api/relay/
+* Creates a 'Relay' snapshot in mongodb from a given instance http://johnny-five.io/api/relay/
 */
 var relay = function(relay) {
     var instance = new Relay({id: relay.id, isOn: relay.isOn, type: relay.type});
@@ -579,13 +599,61 @@ var relay = function(relay) {
     });
 };
 
-///////
+/*
+* Creates a 'GPS' snapshot in mongodb from a given instance http://johnny-five.io/api/gps/
+*/
+var gps = function(gps) {
+    var instance = new GPS({id: gps.id, latitude: gps.latitude, longitude: gps.longitude, altitude: gps.altitude, sat: gps.sat, course: gps.course, speed: gps.speed, time: gps.time });
+    instance.save(function(err) {
+        if(err) console.log("Error: " + err);
+    });
+};
 
 /*
-* Creates a joystick snapshot in mongodb from a given instance http://johnny-five.io/api/joystick/
+* Creates a 'Servo' snapshot in mongodb from a given instance http://johnny-five.io/api/servo/
+*/
+var servo = function(servo) {
+    var instance = new Servo({id: servo.id, pin: servo.pin, range: servo.range, invert: servo.invert, history: servo.history, interval: servo.interval, isMoving: servo.isMoving, last: servo.last, position: servo.position, value: servo.value, startAt: servo.startAt});
+    instance.save(function(err) {
+        if(err) console.log("Error: " + err);
+    });
+};
+
+/*
+* Creates a 'Joystick' snapshot in mongodb from a given instance http://johnny-five.io/api/joystick/
 */
 var joystick = function(joystick) {
     var instance = new Joystick({id: joystick.id, x: joystick.x, y: joystick.y});
+    instance.save(function(err) {
+        if(err) console.log("Error: " + err);
+    });
+};
+
+/*
+* Creates a 'Light' snapshot in mongodb from a given instance http://johnny-five.io/api/light/
+*/
+var light = function(light) {
+    var instance = new Light({id: light.id, pin: light.pin, threshold: light.threshold, value: light.value, level: light.level});
+    instance.save(function(err) {
+        if(err) console.log("Error: " + err);
+    });
+};
+
+/*
+* Creates a 'Hygrometer' snapshot in mongodb from a given instance http://johnny-five.io/api/hygrometer/
+*/
+var hygrometer = function(hygrometer) {
+    var instance = new Hygrometer({id: hygrometer.id, relativeHumidity: hygrometer.relativeHumidity});
+    instance.save(function(err) {
+        if(err) console.log("Error: " + err);
+    });
+};
+
+/*
+* Creates a 'Switch' snapshot in mongodb from a given instance http://johnny-five.io/api/switch/
+*/
+var swtch = function(swtch) {
+    var instance = new Switch({id: swtch.id, pin: swtch.pin, isClosed: swtch.isClosed, isOpen: swtch.isOpen});
     instance.save(function(err) {
         if(err) console.log("Error: " + err);
     });
@@ -615,11 +683,26 @@ exports.save = function(instance, settings){
         case five.Proximity:
             proximity(instance);
             break;
+        case five.GPS:
+            gps(instance);
+            break;
+        case five.Servo:
+            servo(instance);
+            break;
         case five.Relay:
             relay(instance);
             break;
         case five.Joystick:
             joystick(instance);
+            break;
+        case five.Light:
+            light(instance);
+            break;
+        case five.Hygrometer:
+            hygrometer(instance);
+            break;
+        case five.Switch:
+            swtch(instance);
             break;
         default:
             console.log("Class type of " + instance.constructor + " not found");
