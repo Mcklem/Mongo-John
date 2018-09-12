@@ -24,7 +24,7 @@ An instance of MongoDBS running is required to connect mongoose library.
 
 ### Installation
 
-MRCJS requires [Node.js](https://nodejs.org/) to run.
+Mongo-John requires [Node.js](https://nodejs.org/) to run.
 
 Install the dependencies and devDependencies and start the server.
 
