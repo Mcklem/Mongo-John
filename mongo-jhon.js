@@ -65,75 +65,6 @@ var AccelerometerSchema = new Schema({
 AccelerometerSchema.plugin(timestamp);
 var Accelerometer = mongoose.model('Accelerometer', AccelerometerSchema);
 
-var ThermometerSchema = new Schema({
-
-    id: {
-        type: String,
-        required: false
-    },
-    celsius: {
-        type: Number,
-        required: false
-    },
-    fahrenheit: {
-        type: Number,
-        required: false
-    },
-    kelvin: {
-        type: Number,
-        required: false
-    }
-});
-ThermometerSchema.plugin(timestamp);
-var Thermometer = mongoose.model('Thermometer', ThermometerSchema);
-
-var GyroSchema = new Schema({
-
-    id: {
-        type: String,
-        required: false
-    },
-    isCalibrated: {
-        type: Boolean,
-        required: false
-    },
-    pitch: {
-        rate: Number,
-        angle: Number,
-        required: false
-    },
-    roll: {
-        rate: Number,
-        angle: Number,
-        required: false
-    },
-    yaw: {
-        rate: Number,
-        angle: Number,
-        required: false
-    },
-    rate: {
-        x: Number,
-        y: Number,
-        z: Number,
-        required: false
-    },
-    x: {
-        type: Number,
-        required: false
-    },
-    y: {
-        type: Number,
-        required: false
-    },
-    z: {
-        type: Number,
-        required: false
-    }
-});
-GyroSchema.plugin(timestamp);
-var Gyro = mongoose.model('Gyro', GyroSchema);
-
 var AltimeterSchema = new Schema({
     id:{ 
         type: String, 
@@ -208,6 +139,75 @@ var CompassSchema = new Schema({
 });
 CompassSchema.plugin(timestamp);
 var Compass = mongoose.model('Compass', CompassSchema);
+
+var ThermometerSchema = new Schema({
+
+    id: {
+        type: String,
+        required: false
+    },
+    celsius: {
+        type: Number,
+        required: false
+    },
+    fahrenheit: {
+        type: Number,
+        required: false
+    },
+    kelvin: {
+        type: Number,
+        required: false
+    }
+});
+ThermometerSchema.plugin(timestamp);
+var Thermometer = mongoose.model('Thermometer', ThermometerSchema);
+
+var GyroSchema = new Schema({
+
+    id: {
+        type: String,
+        required: false
+    },
+    isCalibrated: {
+        type: Boolean,
+        required: false
+    },
+    pitch: {
+        rate: Number,
+        angle: Number,
+        required: false
+    },
+    roll: {
+        rate: Number,
+        angle: Number,
+        required: false
+    },
+    yaw: {
+        rate: Number,
+        angle: Number,
+        required: false
+    },
+    rate: {
+        x: Number,
+        y: Number,
+        z: Number,
+        required: false
+    },
+    x: {
+        type: Number,
+        required: false
+    },
+    y: {
+        type: Number,
+        required: false
+    },
+    z: {
+        type: Number,
+        required: false
+    }
+});
+GyroSchema.plugin(timestamp);
+var Gyro = mongoose.model('Gyro', GyroSchema);
 
 var ProximitySchema = new Schema({
     id:{ 
@@ -549,6 +549,7 @@ var StepperSchema = new Schema({
         required: false 
     }
 });
+StepperSchema.plugin(timestamp);
 var Stepper = mongoose.model('Stepper', StepperSchema);
 
 /*
@@ -692,7 +693,7 @@ var swtch = function(swtch) {
 };
 
 /*
-* Creates a 'Stepper' snapshot in mongodb from a given instance http://johnny-five.io/api/switch/
+* Creates a 'Stepper' snapshot in mongodb from a given instance http://johnny-five.io/api/stepper/
 */
 var stepper = function(stepper) {
     var instance = new Stepper({id: stepper.id, pins: stepper.pins, rpm: stepper.rpm, direction: stepper.direction, speed: stepper.speed, accel: stepper.accel, decel: stepper.decel});
@@ -707,12 +708,6 @@ exports.save = function(instance, settings){
         case five.Accelerometer:
             accelerometer(instance);
             break;
-        case five.Thermometer:
-            thermometer(instance);
-            break;
-        case five.Gyro:
-            gyro(instance);
-            break;
         case five.Altimeter:
             altimeter(instance);
             break;
@@ -721,6 +716,12 @@ exports.save = function(instance, settings){
             break;
         case five.Compass:
             compass(instance);
+            break;
+        case five.Thermometer:
+            thermometer(instance);
+            break;
+        case five.Gyro:
+            gyro(instance);
             break;
         case five.Proximity:
             proximity(instance);
