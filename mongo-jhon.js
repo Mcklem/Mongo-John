@@ -519,6 +519,38 @@ var SwitchSchema = new Schema({
 SwitchSchema.plugin(timestamp);
 var Switch = mongoose.model('Switch', SwitchSchema);
 
+var StepperSchema = new Schema({
+    id:{ 
+        type: String, 
+        required: false 
+    },
+    pins:{
+        type: [Number], 
+        required: false 
+    },
+    rpm: { 
+        type: Number, 
+        required: false 
+    },
+    direction: { 
+        type: Boolean, 
+        required: false 
+    },
+    speed: { 
+        type: Boolean, 
+        required: false 
+    },
+    accel: { 
+        type: Boolean, 
+        required: false 
+    },
+    decel: { 
+        type: Boolean, 
+        required: false 
+    }
+});
+var Stepper = mongoose.model('Stepper', StepperSchema);
+
 /*
 * Creates an 'Accelerometer' snapshot in mongodb from a given instance http://johnny-five.io/api/accelerometer/
 */
@@ -659,6 +691,16 @@ var swtch = function(swtch) {
     });
 };
 
+/*
+* Creates a 'Stepper' snapshot in mongodb from a given instance http://johnny-five.io/api/switch/
+*/
+var stepper = function(stepper) {
+    var instance = new Stepper({id: stepper.id, pins: stepper.pins, rpm: stepper.rpm, direction: stepper.direction, speed: stepper.speed, accel: stepper.accel, decel: stepper.decel});
+    instance.save(function(err) {
+        if(err) console.log("Error: " + err);
+    });
+};
+
 exports.save = function(instance, settings){
     switch(instance.constructor){
 
@@ -703,6 +745,9 @@ exports.save = function(instance, settings){
             break;
         case five.Switch:
             swtch(instance);
+            break;
+        case five.Stepper:
+            stepper(instance);
             break;
         default:
             console.log("Class type of " + instance.constructor + " not found");
