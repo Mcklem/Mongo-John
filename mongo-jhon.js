@@ -702,6 +702,15 @@ var stepper = function(stepper) {
     });
 };
 
+/*
+* Creates a 'Stepper' snapshot in mongodb from a given instance http://johnny-five.io/api/imu/
+*/
+var IMU = function(IMU) {
+    if(IMU.thermometer!=undefined) thermometer(IMU.thermometer);
+	if(IMU.barometer!=undefined) barometer(IMU.barometer);
+	if(IMU.altimeter!=undefined) altimeter(IMU.altimeter);
+};
+
 exports.save = function(instance, settings){
     switch(instance.constructor){
 
@@ -749,6 +758,9 @@ exports.save = function(instance, settings){
             break;
         case five.Stepper:
             stepper(instance);
+            break;
+		case five.IMU:
+            IMU(instance);
             break;
         default:
             console.log("Class type of " + instance.constructor + " not found");
