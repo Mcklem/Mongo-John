@@ -703,12 +703,23 @@ var stepper = function(stepper) {
 };
 
 /*
-* Creates a 'Stepper' snapshot in mongodb from a given instance http://johnny-five.io/api/imu/
+* Creates a 'IMU' snapshot in mongodb from a given instance http://johnny-five.io/api/imu/
 */
 var IMU = function(IMU) {
     if(IMU.thermometer!=undefined) thermometer(IMU.thermometer);
 	if(IMU.barometer!=undefined) barometer(IMU.barometer);
 	if(IMU.altimeter!=undefined) altimeter(IMU.altimeter);
+};
+
+/*
+* Creates a 'Sensor' snapshot in mongodb from a given instance http://johnny-five.io/api/sensor/
+*/
+var sensor = function(sensor) {
+    var instance = new Sensor({id: sensor.id, pin: sensor.pin, threshold: sensor.threshold, boolean: sensor.boolean, raw: sensor.raw, analog: sensor.analog, constrained: sensor.constrained, value: sensor.value, freq: sensor.freq});
+		
+    instance.save(function(err) {
+        if(err) console.log("Error: " + err);
+    });
 };
 
 exports.save = function(instance, settings){
@@ -758,6 +769,9 @@ exports.save = function(instance, settings){
             break;
         case five.Stepper:
             stepper(instance);
+            break;
+		case five.Sensor:
+            sensor(instance);
             break;
 		case five.IMU:
             IMU(instance);
