@@ -706,6 +706,8 @@ var stepper = function(stepper) {
 * Creates a 'IMU' snapshot in mongodb from a given instance http://johnny-five.io/api/imu/
 */
 var IMU = function(IMU) {
+	if(IMU.compass!=undefined) compass(IMU.compass);
+	if(IMU.gyro!=undefined) gyro(IMU.gyro);
     if(IMU.thermometer!=undefined) thermometer(IMU.thermometer);
 	if(IMU.barometer!=undefined) barometer(IMU.barometer);
 	if(IMU.altimeter!=undefined) altimeter(IMU.altimeter);
