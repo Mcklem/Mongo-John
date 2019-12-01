@@ -779,7 +779,7 @@ exports.save = function(instance, settings){
             IMU(instance);
             break;
         default:
-            console.log("Class type of " + instance.constructor + " not found");
+            console.log("Class type of " + instance.constructor.name + " not found");
             break;
     }
 }
